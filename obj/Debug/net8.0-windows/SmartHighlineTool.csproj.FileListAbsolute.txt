@@ -1,0 +1,17 @@
+C:\Users\vlass\source\repos\SmartHighlineTool\bin\Debug\net8.0-windows\SmartHighlineTool.exe
+C:\Users\vlass\source\repos\SmartHighlineTool\bin\Debug\net8.0-windows\SmartHighlineTool.deps.json
+C:\Users\vlass\source\repos\SmartHighlineTool\bin\Debug\net8.0-windows\SmartHighlineTool.runtimeconfig.json
+C:\Users\vlass\source\repos\SmartHighlineTool\bin\Debug\net8.0-windows\SmartHighlineTool.dll
+C:\Users\vlass\source\repos\SmartHighlineTool\bin\Debug\net8.0-windows\SmartHighlineTool.pdb
+C:\Users\vlass\source\repos\SmartHighlineTool\obj\Debug\net8.0-windows\SmartHighlineTool.Form1.resources
+C:\Users\vlass\source\repos\SmartHighlineTool\obj\Debug\net8.0-windows\SmartHighlineTool.csproj.GenerateResource.cache
+C:\Users\vlass\source\repos\SmartHighlineTool\obj\Debug\net8.0-windows\SmartHighlineTool.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\vlass\source\repos\SmartHighlineTool\obj\Debug\net8.0-windows\SmartHighlineTool.AssemblyInfoInputs.cache
+C:\Users\vlass\source\repos\SmartHighlineTool\obj\Debug\net8.0-windows\SmartHighlineTool.AssemblyInfo.cs
+C:\Users\vlass\source\repos\SmartHighlineTool\obj\Debug\net8.0-windows\SmartHighlineTool.csproj.CoreCompileInputs.cache
+C:\Users\vlass\source\repos\SmartHighlineTool\obj\Debug\net8.0-windows\SmartHighlineTool.dll
+C:\Users\vlass\source\repos\SmartHighlineTool\obj\Debug\net8.0-windows\refint\SmartHighlineTool.dll
+C:\Users\vlass\source\repos\SmartHighlineTool\obj\Debug\net8.0-windows\SmartHighlineTool.pdb
+C:\Users\vlass\source\repos\SmartHighlineTool\obj\Debug\net8.0-windows\SmartHighlineTool.genruntimeconfig.cache
+C:\Users\vlass\source\repos\SmartHighlineTool\obj\Debug\net8.0-windows\ref\SmartHighlineTool.dll
+C:\Users\vlass\source\repos\SmartHighlineTool\obj\Debug\net8.0-windows\SmartHighlineTool.RepairConsentForm.resources
