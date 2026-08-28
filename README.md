@@ -4,6 +4,10 @@ A lightweight Windows utility for analyzing **Bosch Highline radios used in the 
 
 The tool can recover the 4-digit radio security code from a valid EEPROM dump, verify the redundant stored PIN data, inspect known lock/error-state bytes, and generate a reset EEPROM file when required.
 
+This project contains no Bosch, Mercedes-Benz, or Smart firmware, software, EEPROM images, cryptographic material, or proprietary binaries. The application operates only on EEPROM data independently supplied by the user.
+
+The project is intended solely for diagnosis, maintenance, and repair of equipment owned by the user or that the user is authorized to service.
+
 Built by **Veaci**.
 
 ---
