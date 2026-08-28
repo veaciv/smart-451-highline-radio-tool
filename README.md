@@ -10,7 +10,7 @@ The project is intended solely for diagnosis, maintenance, and repair of equipme
 
 Built by **Veaci**.
 
-[[`Smart451HighlineRadioTool-v1.0.0-win-x64.zip`][(../../[bin/Release/Smart451HighlineRadioTool-v1.0.0-win-x64.zip](https://github.com/veaciv/smart-451-highline-radio-tool/blob/main/bin/Release/Smart451HighlineRadioTool-v1.0.0-win-x64.zip))]](https://github.com/veaciv/smart-451-highline-radio-tool/tree/main/bin/Release)
+[[`Smart451HighlineRadioTool-v1.0.1-win-x64.zip`][(../../[bin/Release/Smart451HighlineRadioTool-v1.0.1-win-x64.zip](https://github.com/veaciv/smart-451-highline-radio-tool/blob/main/bin/Release/Smart451HighlineRadioTool-v1.0.1-win-x64.zip))]](https://github.com/veaciv/smart-451-highline-radio-tool/tree/main/bin/Release)
 
 ---
 
