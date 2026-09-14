@@ -55,6 +55,7 @@ Only when the user explicitly requests a reset and both PIN copies match:
 - Verify that no offsets other than 0x03F0, 0x03F8, and 0x03F9 changed.
 - Verify all three reset bytes are 00.
 - If any check fails, refuse to provide the reset file.
+- When generating a reset EEPROM file, preserve the original base filename and save the result using: <original_name>_RESET_with_Veaci_Algorithm.bin Example:2015_Smart_Radio_Bosch_RESET_with_Veaci_Algorithm.bin
 - If all checks pass, provide the generated file as a separate output and report its SHA-256 hash and the exact changed offsets.
 - If the PIN copies do not match, refuse the reset operation.
 
