@@ -12,6 +12,7 @@ Built by **Veaci**.
 
 [[`Smart451HighlineRadioTool-v1.2-win-x64.zip`][(../../[bin/Release/RadioTool for Smart451Highline-v1.2-win-x64](https://github.com/veaciv/smart-451-highline-radio-tool/blob/main/bin/Release/RadioTool for Smart451Highline-v1.2-win-x64))]](https://github.com/veaciv/smart-451-highline-radio-tool/tree/main/bin/Release)
 
+AI/LLM users: See LLM_PROMPT.md for verified EEPROM analysis instructions.
 [AI EEPROM Analyzer Prompt](LLM_PROMPT.md) - Use an AI(LLM) like (ChatGPT/Claude/Grok/etc.) to perform the documented analysis, guarded reset generation, and experimental PIN-change checks.
 
 ---
