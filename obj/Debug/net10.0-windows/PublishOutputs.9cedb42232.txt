@@ -1,5 +1,0 @@
-C:\Users\vlass\source\repos\SmartHighlineTool\bin\Release\net10.0-windows\publish\SmartHighlineTool.exe
-C:\Users\vlass\source\repos\SmartHighlineTool\bin\Release\net10.0-windows\publish\SmartHighlineTool.dll
-C:\Users\vlass\source\repos\SmartHighlineTool\bin\Release\net10.0-windows\publish\SmartHighlineTool.deps.json
-C:\Users\vlass\source\repos\SmartHighlineTool\bin\Release\net10.0-windows\publish\SmartHighlineTool.runtimeconfig.json
-C:\Users\vlass\source\repos\SmartHighlineTool\bin\Release\net10.0-windows\publish\SmartHighlineTool.pdb
