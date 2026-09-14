@@ -20,7 +20,7 @@ public sealed class PinChangeForm : Form
         string currentPin)
     {
         Text =
-            "Experimental Radio PIN Change";
+            Localization.T("dialog.pinTitle");
 
         ClientSize =
             new Size(590, 475);
@@ -44,7 +44,7 @@ public sealed class PinChangeForm : Form
         var lblTitle = new Label
         {
             Text =
-                "Change Radio PIN",
+                Localization.T("dialog.pinHeading"),
 
             Font = new Font(
                 "Segoe UI",
@@ -61,7 +61,7 @@ public sealed class PinChangeForm : Form
             new Label
             {
                 Text =
-                    "Experimental EEPROM modification",
+                    Localization.T("dialog.experimental"),
 
                 ForeColor =
                     Color.DarkOrange,
@@ -80,15 +80,7 @@ public sealed class PinChangeForm : Form
         var warning = new Label
         {
             Text =
-                "This creates a modified COPY of the EEPROM. " +
-                "It does not program the radio directly.\r\n\r\n" +
-
-                "The PIN encoding has been independently verified " +
-                "against multiple known EEPROM/code pairs and  " +
-                "7354 → 1111 example.\r\n\r\n" +
-
-                "Compatibility with every radio or firmware revision " +
-                "is not guaranteed. Always retain the original EEPROM.",
+                Localization.T("dialog.pinWarning"),
 
             Location =
                 new Point(28, 92),
@@ -104,7 +96,7 @@ public sealed class PinChangeForm : Form
             new Label
             {
                 Text =
-                    $"Current PIN: {currentPin}",
+                    Localization.T("dialog.currentPin", currentPin),
 
                 Font = new Font(
                     "Segoe UI",
@@ -120,7 +112,7 @@ public sealed class PinChangeForm : Form
         var lblNew =
             new Label
             {
-                Text = "New PIN",
+                Text = Localization.T("dialog.newPin"),
 
                 AutoSize = true,
 
@@ -147,7 +139,7 @@ public sealed class PinChangeForm : Form
         var lblConfirm =
             new Label
             {
-                Text = "Confirm PIN",
+                Text = Localization.T("dialog.confirmPin"),
 
                 AutoSize = true,
 
@@ -187,7 +179,7 @@ public sealed class PinChangeForm : Form
             new Label
             {
                 Text =
-                    "Enter a four-digit PIN.",
+                    Localization.T("dialog.pinEnter"),
 
                 ForeColor =
                     Color.DimGray,
@@ -202,9 +194,7 @@ public sealed class PinChangeForm : Form
             new CheckBox
             {
                 Text =
-                    "I confirm that I am authorized to service this " +
-                    "equipment and accept responsibility for using " +
-                    "the generated EEPROM file.",
+                    Localization.T("dialog.authorization"),
 
                 Location =
                     new Point(28, 345),
@@ -219,7 +209,7 @@ public sealed class PinChangeForm : Form
         var btnCancel =
             new Button
             {
-                Text = "Cancel",
+                Text = Localization.T("dialog.cancel"),
 
                 Size =
                     new Size(100, 38),
@@ -235,7 +225,7 @@ public sealed class PinChangeForm : Form
             new Button
             {
                 Text =
-                    "Create PIN Change Dump",
+                    Localization.T("dialog.createPin"),
 
                 Size =
                     new Size(165, 38),
@@ -302,7 +292,7 @@ public sealed class PinChangeForm : Form
         if (!validLength || !digits)
         {
             lblValidation.Text =
-                "PIN must contain exactly 4 digits.";
+                Localization.T("dialog.pinDigits");
 
             lblValidation.ForeColor =
                 Color.DarkOrange;
@@ -315,7 +305,7 @@ public sealed class PinChangeForm : Form
         if (!matches)
         {
             lblValidation.Text =
-                "PIN entries do not match.";
+                Localization.T("dialog.pinMismatch");
 
             lblValidation.ForeColor =
                 Color.DarkRed;
@@ -326,7 +316,7 @@ public sealed class PinChangeForm : Form
         }
 
         lblValidation.Text =
-            "✓ PIN entries match";
+            Localization.T("dialog.pinMatch");
 
         lblValidation.ForeColor =
             Color.FromArgb(

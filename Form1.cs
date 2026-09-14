@@ -8,13 +8,17 @@ public partial class Form1 : Form
     private string? _currentFilePath;
     private EepromResult? _currentResult;
 
+    private readonly Label lblTitle;
+    private readonly Label lblSubtitle;
     private readonly Label lblDrop;
     private readonly Label lblRadio;
+    private readonly Label lblPinTitle;
+    private readonly Label lblStatusTitle;
 
     private readonly Label lblPin;
     private readonly Label lblPinVerification;
 
-    private readonly Label lblCounter;
+    private readonly Label lblState;
 
     private readonly Button btnOpen;
     private readonly Button btnReset;
@@ -27,12 +31,13 @@ public partial class Form1 : Form
     private readonly Panel statusPanel;
 
     private readonly LinkLabel lblCredits;
+    private readonly ComboBox cmbLanguage;
 
     public Form1()
     {
         InitializeComponent();
 
-        Text = "Smart 451 Highline Radio Tool";
+        Text = Localization.T("app.title");
 
         Width = 680;
         Height = 600;
@@ -54,9 +59,9 @@ public partial class Form1 : Form
         // HEADER
         //
 
-        var lblTitle = new Label
+        lblTitle = new Label
         {
-            Text = "Smart 451 Highline",
+            Text = Localization.T("header.title"),
 
             Font = new Font(
                 "Segoe UI",
@@ -68,9 +73,9 @@ public partial class Form1 : Form
             Location = new Point(28, 22)
         };
 
-        var lblSubtitle = new Label
+        lblSubtitle = new Label
         {
-            Text = "M95128 EEPROM diagnostic & recovery utility",
+            Text = Localization.T("header.subtitle"),
 
             ForeColor = Color.DimGray,
 
@@ -78,6 +83,20 @@ public partial class Form1 : Form
 
             Location = new Point(31, 61)
         };
+
+        cmbLanguage = new ComboBox
+        {
+            DropDownStyle = ComboBoxStyle.DropDownList,
+            Width = 125,
+            Location = new Point(500, 24)
+        };
+
+        cmbLanguage.Items.AddRange(new object[]
+        {
+            "English", "Français", "Русский", "Română", "Español"
+        });
+        cmbLanguage.SelectedIndex = 0;
+        cmbLanguage.SelectedIndexChanged += CmbLanguage_SelectedIndexChanged;
 
         //
         // FILE PANEL
@@ -97,7 +116,7 @@ public partial class Form1 : Form
 
         lblDrop = new Label
         {
-            Text = "Drop a 16 KB M95128 .bin file here",
+            Text = Localization.T("drop.file"),
 
             Font = new Font(
                 "Segoe UI",
@@ -111,7 +130,7 @@ public partial class Form1 : Form
 
         btnOpen = new Button
         {
-            Text = "Open EEPROM",
+            Text = Localization.T("open.eeprom"),
 
             Width = 130,
             Height = 32,
@@ -123,7 +142,7 @@ public partial class Form1 : Form
 
         lblRadio = new Label
         {
-            Text = "No EEPROM loaded",
+            Text = Localization.T("status.none"),
 
             ForeColor = Color.DimGray,
 
@@ -152,9 +171,9 @@ public partial class Form1 : Form
             BorderStyle = BorderStyle.FixedSingle
         };
 
-        var lblPinTitle = new Label
+        lblPinTitle = new Label
         {
-            Text = "RADIO CODE",
+            Text = Localization.T("radio.code"),
 
             ForeColor = Color.DimGray,
 
@@ -184,7 +203,7 @@ public partial class Form1 : Form
 
         lblPinVerification = new Label
         {
-            Text = "Load an EEPROM to decode",
+            Text = Localization.T("pin.decode"),
 
             ForeColor = Color.DimGray,
 
@@ -195,7 +214,7 @@ public partial class Form1 : Form
 
         btnChangePin = new Button
         {
-            Text = "Change PIN (Experimental)",
+            Text = Localization.T("pin.change"),
 
             Width = 180,
             Height = 32,
@@ -213,7 +232,7 @@ public partial class Form1 : Form
         pinPanel.Controls.Add(btnChangePin);
 
         //
-        // COUNTER PANEL
+        // LOCK / ERROR STATE PANEL
         //
 
         statusPanel = new Panel
@@ -228,9 +247,9 @@ public partial class Form1 : Form
             BorderStyle = BorderStyle.FixedSingle
         };
 
-        var lblStatusTitle = new Label
+        lblStatusTitle = new Label
         {
-            Text = "ATTEMPT COUNTER",
+            Text = Localization.T("state.title"),
 
             ForeColor = Color.DimGray,
 
@@ -244,13 +263,13 @@ public partial class Form1 : Form
             Location = new Point(18, 14)
         };
 
-        lblCounter = new Label
+        lblState = new Label
         {
-            Text = "Unknown",
+            Text = Localization.T("state.unknown"),
 
             Font = new Font(
                 "Segoe UI",
-                12F,
+                11F,
                 FontStyle.Bold),
 
             AutoSize = true,
@@ -260,12 +279,12 @@ public partial class Form1 : Form
 
         btnReset = new Button
         {
-            Text = "Reset Counter",
+            Text = Localization.T("reset.create"),
 
-            Width = 165,
+            Width = 175,
             Height = 36,
 
-            Location = new Point(410, 27),
+            Location = new Point(400, 27),
 
             Enabled = false
         };
@@ -273,7 +292,7 @@ public partial class Form1 : Form
         btnReset.Click += BtnReset_Click;
 
         statusPanel.Controls.Add(lblStatusTitle);
-        statusPanel.Controls.Add(lblCounter);
+        statusPanel.Controls.Add(lblState);
         statusPanel.Controls.Add(btnReset);
 
         //
@@ -282,7 +301,7 @@ public partial class Form1 : Form
 
         btnAdvanced = new Button
         {
-            Text = "Show Advanced",
+            Text = Localization.T("advanced.show"),
 
             Width = 140,
             Height = 32,
@@ -348,6 +367,7 @@ public partial class Form1 : Form
 
         Controls.Add(lblTitle);
         Controls.Add(lblSubtitle);
+        Controls.Add(cmbLanguage);
 
         Controls.Add(filePanel);
 
@@ -360,6 +380,72 @@ public partial class Form1 : Form
         Controls.Add(lblCredits);
 
         Resize += Form1_Resize;
+
+        ApplyLanguage();
+    }
+
+    private void CmbLanguage_SelectedIndexChanged(object? sender, EventArgs e)
+    {
+        Localization.CurrentLanguage = (AppLanguage)cmbLanguage.SelectedIndex;
+        ApplyLanguage();
+    }
+
+    public void ApplyLanguage()
+    {
+        Text = Localization.T("app.title");
+        lblTitle.Text = Localization.T("header.title");
+        lblSubtitle.Text = Localization.T("header.subtitle");
+        lblDrop.Text = _currentFilePath is null
+            ? Localization.T("drop.file")
+            : Path.GetFileName(_currentFilePath);
+        btnOpen.Text = Localization.T("open.eeprom");
+        lblPinTitle.Text = Localization.T("radio.code");
+        btnChangePin.Text = Localization.T("pin.change");
+        lblStatusTitle.Text = Localization.T("state.title");
+        btnReset.Text = Localization.T("reset.create");
+        btnAdvanced.Text = txtAdvanced.Visible
+            ? Localization.T("advanced.hide")
+            : Localization.T("advanced.show");
+
+        if (_currentResult is null)
+        {
+            lblRadio.Text = Localization.T("status.none");
+            lblPinVerification.Text = Localization.T("pin.decode");
+            lblState.Text = Localization.T("state.unknown");
+        }
+        else
+        {
+            lblRadio.Text = _currentResult.RadioId is not null
+                ? Localization.T("radio.id", _currentResult.RadioId)
+                : Localization.T("status.loaded");
+            UpdateLocalizedResultText();
+            UpdateAdvancedInfo();
+        }
+    }
+
+    private void UpdateLocalizedResultText()
+    {
+        if (_currentResult is null)
+        {
+            return;
+        }
+
+        lblPinVerification.Text = _currentResult.PinsMatch
+            ? $"✓ Copy A: {_currentResult.PinA}    ✓ Copy B: {_currentResult.PinB}\r\n{Localization.T("pin.match")}"
+            : $"Copy A: {_currentResult.PinA}    Copy B: {_currentResult.PinB}\r\n{Localization.T("pin.mismatch")}";
+
+        if (_currentResult.ResetValuesAlreadyPresent)
+        {
+            lblState.Text = Localization.T("state.present");
+        }
+        else
+        {
+            lblState.Text = Localization.T(
+                "state.values",
+                _currentResult.State03F0,
+                _currentResult.State03F8,
+                _currentResult.State03F9);
+        }
     }
 
     //
@@ -373,12 +459,10 @@ public partial class Form1 : Form
         using var dialog =
             new OpenFileDialog
             {
-                Title =
-                    "Open M95128 EEPROM Dump",
+                Title = Localization.T("dialog.open"),
 
                 Filter =
-                    "EEPROM binary files (*.bin)|*.bin|" +
-                    "All files (*.*)|*.*"
+                    Localization.T("dialog.filterAll")
             };
 
         if (dialog.ShowDialog() ==
@@ -401,6 +485,8 @@ public partial class Form1 : Form
             byte[] data =
                 File.ReadAllBytes(path);
 
+            CreateClientBackup(path);
+
             EepromResult result =
                 EepromAnalyzer.Analyze(data);
 
@@ -419,10 +505,9 @@ public partial class Form1 : Form
             lblDrop.Text =
                 Path.GetFileName(path);
 
-            lblRadio.Text =
-                result.RadioId is not null
-                    ? $"Bosch / Smart ID: {result.RadioId}"
-                    : "16 KB M95128 dump loaded";
+            lblRadio.Text = result.RadioId is not null
+                ? Localization.T("radio.id", result.RadioId)
+                : Localization.T("status.loaded");
 
             //
             // PIN
@@ -440,7 +525,7 @@ public partial class Form1 : Form
                 lblPinVerification.Text =
                     $"✓ Copy A: {result.PinA}    " +
                     $"✓ Copy B: {result.PinB}\r\n" +
-                    "Both encoded PIN copies match";
+                    Localization.T("pin.match");
 
                 lblPinVerification.ForeColor =
                     Color.FromArgb(
@@ -458,8 +543,7 @@ public partial class Form1 : Form
                 lblPinVerification.Text =
                     $"Copy A: {result.PinA}    " +
                     $"Copy B: {result.PinB}\r\n" +
-                    "PIN copies do not match — " +
-                    "do not use this code";
+                    Localization.T("pin.mismatch");
 
                 lblPinVerification.ForeColor =
                     Color.DarkRed;
@@ -468,15 +552,15 @@ public partial class Form1 : Form
             }
 
             //
-            // COUNTER
+            // LOCK / ERROR STATE
             //
 
-            if (result.Counter == 0)
+            if (result.ResetValuesAlreadyPresent)
             {
-                lblCounter.Text =
-                    "Stored counter: 0 — already reset";
+                lblState.Text =
+                    Localization.T("state.present");
 
-                lblCounter.ForeColor =
+                lblState.ForeColor =
                     Color.FromArgb(
                         25, 110, 60);
 
@@ -484,10 +568,13 @@ public partial class Form1 : Form
             }
             else
             {
-                lblCounter.Text =
-                    $"Stored counter: {result.Counter}";
+                lblState.Text = Localization.T(
+                    "state.values",
+                    result.State03F0,
+                    result.State03F8,
+                    result.State03F9);
 
-                lblCounter.ForeColor =
+                lblState.ForeColor =
                     Color.DarkOrange;
 
                 btnReset.Enabled =
@@ -501,14 +588,48 @@ public partial class Form1 : Form
         catch (Exception ex)
         {
             MessageBox.Show(
-                $"Could not read EEPROM file." +
-                $"\r\n\r\n{ex.Message}",
+                Localization.T("error.read", ex.Message),
 
-                "Read Error",
+                Localization.T("error.readTitle"),
 
                 MessageBoxButtons.OK,
                 MessageBoxIcon.Error);
         }
+    }
+
+    private static void CreateClientBackup(string sourcePath)
+    {
+        string backupDirectory =
+            Path.Combine(AppContext.BaseDirectory, "Backups");
+
+        Directory.CreateDirectory(backupDirectory);
+
+        string baseName =
+            Path.GetFileNameWithoutExtension(sourcePath);
+
+        string timestamp =
+            DateTime.Now.ToString("yyyyMMdd-HHmmssfff");
+
+        string backupPath =
+            Path.Combine(
+                backupDirectory,
+                $"{baseName}.back.{timestamp}.bin");
+
+        using FileStream backup =
+            new FileStream(
+                backupPath,
+                FileMode.CreateNew,
+                FileAccess.Write,
+                FileShare.None);
+
+        using FileStream source =
+            new FileStream(
+                sourcePath,
+                FileMode.Open,
+                FileAccess.Read,
+                FileShare.Read);
+
+        source.CopyTo(backup);
     }
 
     //
@@ -529,10 +650,10 @@ public partial class Form1 : Form
         lblPinVerification.ForeColor =
             Color.DarkRed;
 
-        lblCounter.Text =
-            "Unknown";
+        lblState.Text =
+            Localization.T("state.unknown");
 
-        lblCounter.ForeColor =
+        lblState.ForeColor =
             Color.DimGray;
 
         btnReset.Enabled = false;
@@ -542,7 +663,7 @@ public partial class Form1 : Form
         MessageBox.Show(
             error,
 
-            "Unsupported EEPROM",
+            Localization.T("error.unsupportedTitle"),
 
             MessageBoxButtons.OK,
             MessageBoxIcon.Warning);
@@ -603,15 +724,18 @@ public partial class Form1 : Form
             }
 
             //
-            // COUNTER MUST NOT CHANGE
+            // PIN CHANGE MUST NOT ALTER
+            // 03F0 OR 03F9.
             //
 
-            if (generatedResult.Counter !=
-                _currentResult.Counter)
+            if (generatedResult.State03F0 !=
+                    _currentResult.State03F0 ||
+                generatedResult.State03F9 !=
+                    _currentResult.State03F9)
             {
                 throw new InvalidOperationException(
                     "Generated EEPROM unexpectedly " +
-                    "changed the attempt counter.");
+                    "changed unrelated state bytes.");
             }
 
             string directory =
@@ -623,7 +747,7 @@ public partial class Form1 : Form
                     _currentFilePath);
 
             //
-            // Don't put the PIN in filename.
+            // Do not expose PIN in filename.
             //
 
             string suggestedName =
@@ -633,10 +757,10 @@ public partial class Form1 : Form
                 new SaveFileDialog
                 {
                     Title =
-                        "Save PIN Changed EEPROM",
+                        Localization.T("dialog.savePin"),
 
                     Filter =
-                        "EEPROM binary file (*.bin)|*.bin",
+                        Localization.T("dialog.filter"),
 
                     FileName =
                         suggestedName,
@@ -660,7 +784,7 @@ public partial class Form1 : Form
                     saveDialog.FileName);
 
             //
-            // NEVER overwrite original.
+            // NEVER OVERWRITE ORIGINAL.
             //
 
             if (string.Equals(
@@ -669,10 +793,9 @@ public partial class Form1 : Form
                 StringComparison.OrdinalIgnoreCase))
             {
                 MessageBox.Show(
-                    "The modified EEPROM cannot " +
-                    "overwrite the original dump.",
+                    Localization.T("warning.noOverwritePin"),
 
-                    "Safety Check",
+                    Localization.T("error.safety"),
 
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Warning);
@@ -685,7 +808,7 @@ public partial class Form1 : Form
                 modified);
 
             //
-            // READ FILE BACK FROM DISK
+            // READ SAVED FILE BACK FROM DISK
             //
 
             byte[] verification =
@@ -717,36 +840,31 @@ public partial class Form1 : Form
             }
 
             //
-            // COUNTER MUST STILL BE SAME
+            // VERIFY 03F0 / 03F9 UNCHANGED
             //
 
-            if (saved.Counter !=
-                _currentResult.Counter)
+            if (saved.State03F0 !=
+                    _currentResult.State03F0 ||
+                saved.State03F9 !=
+                    _currentResult.State03F9)
             {
                 throw new InvalidOperationException(
                     "Saved EEPROM unexpectedly changed " +
-                    "the attempt counter.");
+                    "unrelated state bytes.");
             }
 
             MessageBox.Show(
-                $"PIN change dump created successfully." +
-                $"\r\n\r\n" +
+                Localization.T(
+                    "success.pin",
+                    _currentResult.PinA,
+                    newPin,
+                    saved.State03F0,
+                    _currentResult.State03F8,
+                    saved.State03F8,
+                    saved.State03F9,
+                    destinationPath),
 
-                $"Original PIN: {_currentResult.PinA}\r\n" +
-                $"New PIN: {newPin}\r\n\r\n" +
-
-                $"Counter remains: {saved.Counter}\r\n" +
-
-                $"0x03F8: " +
-                $"{_currentResult.Status03F8:X2} → " +
-                $"{saved.Status03F8:X2}\r\n\r\n" +
-
-                $"Saved as:\r\n" +
-                $"{destinationPath}\r\n\r\n" +
-
-                "The original EEPROM file was not modified.",
-
-                "PIN Change Dump Created",
+                Localization.T("success.pinTitle"),
 
                 MessageBoxButtons.OK,
                 MessageBoxIcon.Information);
@@ -754,10 +872,9 @@ public partial class Form1 : Form
         catch (Exception ex)
         {
             MessageBox.Show(
-                $"PIN change dump was NOT created." +
-                $"\r\n\r\n{ex.Message}",
+                Localization.T("error.pinChange", ex.Message),
 
-                "PIN Change Failed",
+                Localization.T("error.pinChangeTitle"),
 
                 MessageBoxButtons.OK,
                 MessageBoxIcon.Error);
@@ -765,7 +882,7 @@ public partial class Form1 : Form
     }
 
     //
-    // COUNTER RESET
+    // REPAIR / RESET
     //
 
     private void BtnReset_Click(
@@ -783,7 +900,9 @@ public partial class Form1 : Form
         using var consentForm =
             new RepairConsentForm(
                 _currentResult.PinA,
-                _currentResult.Counter);
+                _currentResult.State03F0,
+                _currentResult.State03F8,
+                _currentResult.State03F9);
 
         if (consentForm.ShowDialog(this) !=
             DialogResult.OK)
@@ -795,7 +914,7 @@ public partial class Form1 : Form
         {
             byte[] resetDump =
                 EepromAnalyzer
-                    .CreateCounterResetDump(
+                    .CreateResetDump(
                         _currentDump);
 
             string directory =
@@ -807,16 +926,16 @@ public partial class Form1 : Form
                     _currentFilePath);
 
             string suggestedName =
-                $"{baseName}.counter-reset.bin";
+                $"{baseName}.repair-reset.bin";
 
             using var dialog =
                 new SaveFileDialog
                 {
                     Title =
-                        "Save Counter Reset EEPROM",
+                        Localization.T("dialog.saveReset"),
 
                     Filter =
-                        "EEPROM binary file (*.bin)|*.bin",
+                        Localization.T("dialog.filter"),
 
                     FileName =
                         suggestedName,
@@ -839,16 +958,19 @@ public partial class Form1 : Form
                 Path.GetFullPath(
                     dialog.FileName);
 
+            //
+            // NEVER OVERWRITE ORIGINAL.
+            //
+
             if (string.Equals(
                 sourceFullPath,
                 destinationFullPath,
                 StringComparison.OrdinalIgnoreCase))
             {
                 MessageBox.Show(
-                    "The counter-reset dump cannot " +
-                    "overwrite the original EEPROM file.",
+                    Localization.T("warning.noOverwriteReset"),
 
-                    "Safety Check",
+                    Localization.T("error.safety"),
 
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Warning);
@@ -861,7 +983,7 @@ public partial class Form1 : Form
                 resetDump);
 
             //
-            // READ BACK FROM DISK
+            // READ SAVED FILE BACK
             //
 
             byte[] verification =
@@ -880,32 +1002,41 @@ public partial class Form1 : Form
                     verification);
 
             //
-            // VERIFY PIN
+            // VERIFY PIN UNCHANGED
             //
 
             if (!resetResult.PinsMatch ||
                 resetResult.PinA !=
-                _currentResult.PinA)
+                    _currentResult.PinA ||
+                resetResult.PinB !=
+                    _currentResult.PinB)
             {
                 throw new InvalidOperationException(
                     "PIN verification failed " +
-                    "after saving counter reset dump.");
+                    "after saving repair/reset dump.");
             }
 
             //
-            // VERIFY COUNTER
+            // VERIFY RESET STATE
             //
 
-            if (resetResult.Counter != 0)
+            if (!resetResult.ResetValuesAlreadyPresent)
             {
                 throw new InvalidOperationException(
-                    "Counter verification failed " +
-                    "after saving.");
+                    "Repair/reset state verification failed.");
             }
 
             //
             // FINAL BYTE-BY-BYTE VERIFICATION
             //
+
+            var allowedOffsets =
+                new HashSet<int>
+                {
+                    EepromAnalyzer.State03F0Offset,
+                    EepromAnalyzer.State03F8Offset,
+                    EepromAnalyzer.State03F9Offset
+                };
 
             for (int i = 0;
                  i < _currentDump.Length;
@@ -917,8 +1048,7 @@ public partial class Form1 : Form
                     continue;
                 }
 
-                if (i !=
-                    EepromAnalyzer.CounterOffset)
+                if (!allowedOffsets.Contains(i))
                 {
                     throw new InvalidOperationException(
                         $"Unexpected saved-file change " +
@@ -927,20 +1057,15 @@ public partial class Form1 : Form
             }
 
             MessageBox.Show(
-                $"Counter reset dump created successfully." +
-                $"\r\n\r\n" +
+                    Localization.T(
+                        "success.reset",
+                        resetResult.PinA,
+                        _currentResult.State03F0,
+                        _currentResult.State03F8,
+                        _currentResult.State03F9,
+                        destinationFullPath),
 
-                $"Recovered PIN: {resetResult.PinA}\r\n" +
-
-                $"Counter: {_currentResult.Counter} → 0\r\n\r\n" +
-
-                $"Saved as:\r\n" +
-                $"{destinationFullPath}\r\n\r\n" +
-
-                "Only EEPROM offset 0x03F0 was modified.\r\n" +
-                "Your original EEPROM file was not modified.",
-
-                "Counter Reset Created",
+                Localization.T("success.resetTitle"),
 
                 MessageBoxButtons.OK,
                 MessageBoxIcon.Information);
@@ -948,10 +1073,9 @@ public partial class Form1 : Form
         catch (Exception ex)
         {
             MessageBox.Show(
-                $"Counter reset dump was NOT created." +
-                $"\r\n\r\n{ex.Message}",
+                Localization.T("error.reset", ex.Message),
 
-                "Safety Check Failed",
+                Localization.T("error.resetTitle"),
 
                 MessageBoxButtons.OK,
                 MessageBoxIcon.Error);
@@ -971,8 +1095,8 @@ public partial class Form1 : Form
 
         btnAdvanced.Text =
             txtAdvanced.Visible
-                ? "Hide Advanced"
-                : "Show Advanced";
+                ? Localization.T("advanced.hide")
+                : Localization.T("advanced.show");
 
         if (txtAdvanced.Visible)
         {
@@ -1000,60 +1124,53 @@ public partial class Form1 : Form
         }
 
         txtAdvanced.Text =
-            $"File size:      {_currentDump.Length:N0} bytes\r\n" +
+            Localization.T("advanced.file", _currentDump.Length) + "\r\n" +
 
-            $"SHA-256:        {_currentResult.Sha256}\r\n" +
+            Localization.T("advanced.sha", _currentResult.Sha256) + "\r\n" +
 
-            $"Radio ID:       " +
-            $"{_currentResult.RadioId ?? "Not detected"}\r\n" +
-
-            $"\r\n" +
-
-            $"PIN COPY A\r\n" +
-
-            $"Offset:         0x{EepromAnalyzer.PinAOffset:X4}\r\n" +
-
-            $"Raw:            " +
-            $"{HexBytes(_currentDump, EepromAnalyzer.PinAOffset, 4)}\r\n" +
-
-            $"Decoded:        {_currentResult.PinA}\r\n" +
+            Localization.T(
+                "advanced.radio",
+                _currentResult.RadioId ?? Localization.T("advanced.notDetected")) + "\r\n" +
 
             $"\r\n" +
 
-            $"PIN COPY B\r\n" +
+            Localization.T("advanced.copyA") + "\r\n" +
 
-            $"Offset:         0x{EepromAnalyzer.PinBOffset:X4}\r\n" +
+            Localization.T("advanced.offset", EepromAnalyzer.PinAOffset) + "\r\n" +
 
-            $"Raw:            " +
-            $"{HexBytes(_currentDump, EepromAnalyzer.PinBOffset, 4)}\r\n" +
+            Localization.T("advanced.raw", HexBytes(_currentDump, EepromAnalyzer.PinAOffset, 4)) + "\r\n" +
 
-            $"Decoded:        {_currentResult.PinB}\r\n" +
-
-            $"\r\n" +
-
-            $"ATTEMPT COUNTER\r\n" +
-
-            $"Offset:         0x{EepromAnalyzer.CounterOffset:X4}\r\n" +
-
-            $"Raw value:      {_currentResult.Counter:X2}\r\n" +
-
-            $"Decimal:        {_currentResult.Counter}\r\n" +
+            Localization.T("advanced.decoded", _currentResult.PinA) + "\r\n" +
 
             $"\r\n" +
 
-            $"PIN-CHANGE STATE\r\n" +
+            Localization.T("advanced.copyB") + "\r\n" +
 
-            $"0x03F8:         {_currentResult.Status03F8:X2}\r\n" +
+            Localization.T("advanced.offset", EepromAnalyzer.PinBOffset) + "\r\n" +
 
-            $"Code change:    set to 00 in verified samples\r\n" +
+            Localization.T("advanced.raw", HexBytes(_currentDump, EepromAnalyzer.PinBOffset, 4)) + "\r\n" +
+
+            Localization.T("advanced.decoded", _currentResult.PinB) + "\r\n" +
 
             $"\r\n" +
 
-            $"RESEARCH BYTE\r\n" +
+            Localization.T("advanced.stateBytes") + "\r\n" +
 
-            $"0x03F9:         {_currentResult.Status03F9:X2}\r\n" +
+            $"0x03F0:         {_currentResult.State03F0:X2}\r\n" +
+            $"0x03F8:         {_currentResult.State03F8:X2}\r\n" +
+            $"0x03F9:         {_currentResult.State03F9:X2}\r\n" +
 
-            $"Meaning:        Not currently established\r\n";
+            $"\r\n" +
+
+            Localization.T("advanced.verified") + "\r\n" +
+
+            $"0x03F0 → 00\r\n" +
+            $"0x03F8 → 00\r\n" +
+            $"0x03F9 → 00\r\n" +
+
+            $"\r\n" +
+
+            Localization.T("advanced.unknownMeaning") + "\r\n";
     }
 
     private static string HexBytes(

@@ -1,26 +1,26 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "C:\\Users\\vlass\\source\\repos\\SmartHighlineTool\\",
+  "WorkspaceRootPath": "C:\\Dev\\smart-451-highline-radio-tool\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{B63AF4AF-FE71-49F2-B0EC-BFB197ADACEA}|SmartHighlineTool.csproj|c:\\users\\vlass\\source\\repos\\smarthighlinetool\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B63AF4AF-FE71-49F2-B0EC-BFB197ADACEA}|SmartHighlineTool.csproj|solutionrelative:form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{1379FBED-38FF-804C-3C90-888AD2D2B340}|SmartHighlineTool.csproj|c:\\dev\\smart-451-highline-radio-tool\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1379FBED-38FF-804C-3C90-888AD2D2B340}|SmartHighlineTool.csproj|solutionrelative:form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{B63AF4AF-FE71-49F2-B0EC-BFB197ADACEA}|SmartHighlineTool.csproj|c:\\users\\vlass\\source\\repos\\smarthighlinetool\\repairconsentform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B63AF4AF-FE71-49F2-B0EC-BFB197ADACEA}|SmartHighlineTool.csproj|solutionrelative:repairconsentform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{B63AF4AF-FE71-49F2-B0EC-BFB197ADACEA}|SmartHighlineTool.csproj|c:\\users\\vlass\\source\\repos\\smarthighlinetool\\eepromanalyzer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B63AF4AF-FE71-49F2-B0EC-BFB197ADACEA}|SmartHighlineTool.csproj|solutionrelative:eepromanalyzer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{B63AF4AF-FE71-49F2-B0EC-BFB197ADACEA}|SmartHighlineTool.csproj|c:\\users\\vlass\\source\\repos\\smarthighlinetool\\form1.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B63AF4AF-FE71-49F2-B0EC-BFB197ADACEA}|SmartHighlineTool.csproj|solutionrelative:form1.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{B63AF4AF-FE71-49F2-B0EC-BFB197ADACEA}|SmartHighlineTool.csproj|c:\\users\\vlass\\source\\repos\\smarthighlinetool\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "AbsoluteMoniker": "D:0:0:{B63AF4AF-FE71-49F2-B0EC-BFB197ADACEA}|SmartHighlineTool.csproj|C:\\Dev\\smart-451-highline-radio-tool\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
       "RelativeMoniker": "D:0:0:{B63AF4AF-FE71-49F2-B0EC-BFB197ADACEA}|SmartHighlineTool.csproj|solutionrelative:form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1379FBED-38FF-804C-3C90-888AD2D2B340}|SmartHighlineTool.csproj|c:\\dev\\smart-451-highline-radio-tool\\repairconsentform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1379FBED-38FF-804C-3C90-888AD2D2B340}|SmartHighlineTool.csproj|solutionrelative:repairconsentform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1379FBED-38FF-804C-3C90-888AD2D2B340}|SmartHighlineTool.csproj|c:\\dev\\smart-451-highline-radio-tool\\form1.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1379FBED-38FF-804C-3C90-888AD2D2B340}|SmartHighlineTool.csproj|solutionrelative:form1.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1379FBED-38FF-804C-3C90-888AD2D2B340}|SmartHighlineTool.csproj|c:\\dev\\smart-451-highline-radio-tool\\eepromanalyzer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1379FBED-38FF-804C-3C90-888AD2D2B340}|SmartHighlineTool.csproj|solutionrelative:eepromanalyzer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -36,70 +36,62 @@
               "$type": "Document",
               "DocumentIndex": 0,
               "Title": "Form1.cs",
-              "DocumentMoniker": "C:\\Users\\vlass\\source\\repos\\SmartHighlineTool\\Form1.cs",
+              "DocumentMoniker": "C:\\Dev\\smart-451-highline-radio-tool\\Form1.cs",
               "RelativeDocumentMoniker": "Form1.cs",
-              "ToolTip": "C:\\Users\\vlass\\source\\repos\\SmartHighlineTool\\Form1.cs",
+              "ToolTip": "C:\\Dev\\smart-451-highline-radio-tool\\Form1.cs",
               "RelativeToolTip": "Form1.cs",
-              "ViewState": "AgIAAFABAAAAAAAAAAAgwGQBAAA8AAAAAAAAAA==",
+              "ViewState": "AgIAAEcBAAAAAAAAAAAgwF4BAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-08-28T14:13:59.952Z",
               "IsPinned": true,
               "EditorCaption": ""
             },
             {
-              "$type": "Bookmark",
-              "Name": "ST:0:0:{cce594b6-0c39-4442-ba28-10c64ac7e89f}"
-            },
-            {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 2,
               "Title": "RepairConsentForm.cs",
-              "DocumentMoniker": "C:\\Users\\vlass\\source\\repos\\SmartHighlineTool\\RepairConsentForm.cs",
+              "DocumentMoniker": "C:\\Dev\\smart-451-highline-radio-tool\\RepairConsentForm.cs",
               "RelativeDocumentMoniker": "RepairConsentForm.cs",
-              "ToolTip": "C:\\Users\\vlass\\source\\repos\\SmartHighlineTool\\RepairConsentForm.cs",
+              "ToolTip": "C:\\Dev\\smart-451-highline-radio-tool\\RepairConsentForm.cs",
               "RelativeToolTip": "RepairConsentForm.cs",
               "ViewState": "AgIAAFYAAAAAAAAAAAAwwIIAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-08-28T14:43:49.184Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-08-28T14:43:49.184Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 3,
               "Title": "Form1.Designer.cs",
-              "DocumentMoniker": "C:\\Users\\vlass\\source\\repos\\SmartHighlineTool\\Form1.Designer.cs",
+              "DocumentMoniker": "C:\\Dev\\smart-451-highline-radio-tool\\Form1.Designer.cs",
               "RelativeDocumentMoniker": "Form1.Designer.cs",
-              "ToolTip": "C:\\Users\\vlass\\source\\repos\\SmartHighlineTool\\Form1.Designer.cs",
+              "ToolTip": "C:\\Dev\\smart-451-highline-radio-tool\\Form1.Designer.cs",
               "RelativeToolTip": "Form1.Designer.cs",
               "ViewState": "AgIAABIAAAAAAAAAAAAowCsAAAAFAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-08-28T14:18:05.739Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "EepromAnalyzer.cs",
-              "DocumentMoniker": "C:\\Users\\vlass\\source\\repos\\SmartHighlineTool\\EepromAnalyzer.cs",
-              "RelativeDocumentMoniker": "EepromAnalyzer.cs",
-              "ToolTip": "C:\\Users\\vlass\\source\\repos\\SmartHighlineTool\\EepromAnalyzer.cs",
-              "RelativeToolTip": "EepromAnalyzer.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAGkAAAAoAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-08-28T14:16:30.862Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-08-28T14:18:05.739Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 4,
+              "Title": "EepromAnalyzer.cs",
+              "DocumentMoniker": "C:\\Dev\\smart-451-highline-radio-tool\\EepromAnalyzer.cs",
+              "RelativeDocumentMoniker": "EepromAnalyzer.cs",
+              "ToolTip": "C:\\Dev\\smart-451-highline-radio-tool\\EepromAnalyzer.cs",
+              "RelativeToolTip": "EepromAnalyzer.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAGkAAAAoAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-08-28T14:16:30.862Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
               "Title": "Form1.cs [Design]",
-              "DocumentMoniker": "C:\\Users\\vlass\\source\\repos\\SmartHighlineTool\\Form1.cs",
+              "DocumentMoniker": "C:\\Dev\\smart-451-highline-radio-tool\\Form1.cs",
               "RelativeDocumentMoniker": "Form1.cs",
               "ToolTip": "C:\\Users\\vlass\\source\\repos\\SmartHighlineTool\\Form1.cs [Design]",
-              "RelativeToolTip": "Form1.cs [Design]",
+              "RelativeToolTip": "..\\..\\Users\\vlass\\source\\repos\\SmartHighlineTool\\Form1.cs [Design]",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-08-28T14:13:24.876Z",
-              "EditorCaption": " [Design]"
+              "WhenOpened": "2026-08-28T14:13:24.876Z"
             }
           ]
         }

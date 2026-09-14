@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("SmartHighlineTool")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+33652dfc1e55af4e2f488887366a06573b20c120")]
 [assembly: System.Reflection.AssemblyProductAttribute("SmartHighlineTool")]
 [assembly: System.Reflection.AssemblyTitleAttribute("SmartHighlineTool")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

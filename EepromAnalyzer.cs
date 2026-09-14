@@ -18,11 +18,16 @@ public sealed class EepromResult
         PinA.Length == 4 &&
         PinA.All(char.IsDigit);
 
-    public byte Counter { get; init; }
+    // Lock / error-state bytes.
+    // Their individual meanings are not fully established.
+    public byte State03F0 { get; init; }
+    public byte State03F8 { get; init; }
+    public byte State03F9 { get; init; }
 
-    // Research / state bytes.
-    public byte Status03F8 { get; init; }
-    public byte Status03F9 { get; init; }
+    public bool ResetValuesAlreadyPresent =>
+        State03F0 == 0x00 &&
+        State03F8 == 0x00 &&
+        State03F9 == 0x00;
 
     public string Sha256 { get; init; } = "";
 }
@@ -34,10 +39,9 @@ public static class EepromAnalyzer
     public const int PinAOffset = 0x03E0;
     public const int PinBOffset = 0x03E8;
 
-    public const int CounterOffset = 0x03F0;
-
-    // Martech code-change output resets this byte to 00.
-    public const int PinChangeStateOffset = 0x03F8;
+    public const int State03F0Offset = 0x03F0;
+    public const int State03F8Offset = 0x03F8;
+    public const int State03F9Offset = 0x03F9;
 
     private static readonly byte[] PinMaskA =
     {
@@ -81,10 +85,9 @@ public static class EepromAnalyzer
             PinA = pinA,
             PinB = pinB,
 
-            Counter = data[CounterOffset],
-
-            Status03F8 = data[0x03F8],
-            Status03F9 = data[0x03F9],
+            State03F0 = data[State03F0Offset],
+            State03F8 = data[State03F8Offset],
+            State03F9 = data[State03F9Offset],
 
             Sha256 = Convert.ToHexString(
                 SHA256.HashData(data)
@@ -105,7 +108,9 @@ public static class EepromAnalyzer
                 data[offset + i] ^ xorMask[i];
 
             if (digits[i] < 0 || digits[i] > 9)
+            {
                 return "????";
+            }
         }
 
         return string.Concat(digits);
@@ -137,10 +142,10 @@ public static class EepromAnalyzer
     }
 
     //
-    // COUNTER RESET
+    // LOCK / ERROR RESET
     //
 
-    public static byte[] CreateCounterResetDump(
+    public static byte[] CreateResetDump(
         byte[] original)
     {
         ValidateOriginal(original);
@@ -152,49 +157,72 @@ public static class EepromAnalyzer
         {
             throw new InvalidOperationException(
                 "PIN copies do not match. " +
-                "Counter reset has been refused.");
+                "Repair/reset operation has been refused.");
         }
 
         byte[] reset =
             (byte[])original.Clone();
 
-        reset[CounterOffset] = 0x00;
+        //
+        // Verified working recovery pattern:
+        //
+        // 03F0 -> 00
+        // 03F8 -> 00
+        // 03F9 -> 00
+        //
+
+        reset[State03F0Offset] = 0x00;
+        reset[State03F8Offset] = 0x00;
+        reset[State03F9Offset] = 0x00;
 
         EepromResult after =
             Analyze(reset);
 
-        if (before.PinA != after.PinA ||
-            before.PinB != after.PinB)
+        //
+        // PIN data must remain untouched.
+        //
+
+        if (!after.PinsMatch ||
+            after.PinA != before.PinA ||
+            after.PinB != before.PinB)
         {
             throw new InvalidOperationException(
-                "Counter reset unexpectedly changed PIN data.");
+                "Safety check failed: repair/reset " +
+                "operation changed PIN data.");
         }
 
-        if (!after.PinsMatch)
-        {
-            throw new InvalidOperationException(
-                "PIN copies no longer match.");
-        }
+        //
+        // Verify only the expected three
+        // state bytes were modified.
+        //
 
         VerifyOnlyAllowedOffsetsChanged(
             original,
             reset,
             new[]
             {
-                CounterOffset
+                State03F0Offset,
+                State03F8Offset,
+                State03F9Offset
             });
 
-        if (reset[CounterOffset] != 0x00)
+        //
+        // Final state verification.
+        //
+
+        if (after.State03F0 != 0x00 ||
+            after.State03F8 != 0x00 ||
+            after.State03F9 != 0x00)
         {
             throw new InvalidOperationException(
-                "Counter reset verification failed.");
+                "Repair/reset verification failed.");
         }
 
         return reset;
     }
 
     //
-    // PIN CHANGE
+    // EXPERIMENTAL PIN CHANGE
     //
 
     public static byte[] CreatePinChangeDump(
@@ -225,14 +253,15 @@ public static class EepromAnalyzer
         if (before.PinA == newPin)
         {
             throw new InvalidOperationException(
-                "The requested PIN is already stored in this EEPROM.");
+                "The requested PIN is already stored " +
+                "in this EEPROM.");
         }
 
         byte[] modified =
             (byte[])original.Clone();
 
         //
-        // Encode PIN Copy A + B.
+        // Encode both redundant PIN copies.
         //
 
         for (int i = 0; i < 4; i++)
@@ -248,30 +277,23 @@ public static class EepromAnalyzer
         }
 
         //
-        // Martech-generated code-change example
-        // resets 0x03F8 to 00.
+        // Verified code-change samples
+        // clear 0x03F8.
         //
-        // Important:
-        // this does NOT reset the attempt counter at 0x03F0.
+        // Do NOT modify 03F0 or 03F9 here.
         //
 
-        modified[PinChangeStateOffset] = 0x00;
-
-        //
-        // Verify resulting EEPROM decodes back
-        // to exactly the requested PIN.
-        //
+        modified[State03F8Offset] = 0x00;
 
         EepromResult after =
             Analyze(modified);
 
-        if (!after.PinsMatch)
-        {
-            throw new InvalidOperationException(
-                "Generated PIN copies do not match.");
-        }
+        //
+        // Verify generated PIN.
+        //
 
-        if (after.PinA != newPin ||
+        if (!after.PinsMatch ||
+            after.PinA != newPin ||
             after.PinB != newPin)
         {
             throw new InvalidOperationException(
@@ -280,23 +302,17 @@ public static class EepromAnalyzer
         }
 
         //
-        // Counter MUST remain unchanged.
+        // PIN change must not modify
+        // 03F0 or 03F9.
         //
 
-        if (after.Counter != before.Counter)
+        if (after.State03F0 != before.State03F0 ||
+            after.State03F9 != before.State03F9)
         {
             throw new InvalidOperationException(
                 "PIN change unexpectedly modified " +
-                "the attempt counter.");
+                "unrelated state bytes.");
         }
-
-        //
-        // Only these locations may change:
-        //
-        // 03E0–03E3
-        // 03E8–03EB
-        // 03F8
-        //
 
         var allowedOffsets =
             new HashSet<int>();
@@ -311,7 +327,7 @@ public static class EepromAnalyzer
         }
 
         allowedOffsets.Add(
-            PinChangeStateOffset);
+            State03F8Offset);
 
         VerifyOnlyAllowedOffsetsChanged(
             original,
@@ -348,7 +364,9 @@ public static class EepromAnalyzer
              i++)
         {
             if (original[i] == modified[i])
+            {
                 continue;
+            }
 
             if (!allowed.Contains(i))
             {

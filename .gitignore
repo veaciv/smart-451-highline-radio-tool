@@ -1,0 +1,19 @@
+# Visual Studio user and workspace data
+.vs/
+*.user
+*.suo
+
+# .NET intermediate files
+obj/
+
+# Local application backups containing client EEPROM dumps
+Backups/
+**/Backups/
+
+# Test and coverage output
+TestResults/
+coverage/
+
+# Local publish output and archives
+publish/
+*.zip
