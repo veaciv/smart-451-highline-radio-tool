@@ -70,6 +70,7 @@ Only when the user explicitly requests a PIN change and supplies exactly four de
 - Re-analyze and require both PIN copies to equal the requested PIN.
 - Verify 0x03F0 and 0x03F9 are unchanged.
 - Verify that no offsets outside the eight PIN bytes and 0x03F8 changed.
+- When generating a reset EEPROM file, preserve the original base filename and save the result using: <original_name>_PIN_CHANGE_with_Veaci_Algorithm.bin Example:2015_Smart_Radio_Bosch_PIN_CHANGE_with_Veaci_Algorithm.bin
 - If any check fails, refuse to provide the modified file.
 - If all checks pass, provide it as a separate output and report its SHA-256 hash and changed offsets.
 
